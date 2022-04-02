@@ -11,7 +11,7 @@ class FlatIterator:
         self.main_list = some_list
 
     def __iter__(self):
-        self.main_list_cursor = 0
+        self.main_list_cursor = -1
         self.nested_list_cursor = 0
         return self
 
@@ -20,7 +20,7 @@ class FlatIterator:
         if len(self.main_list[self.main_list_cursor]) == self.nested_list_cursor:
             self.main_list_cursor += 1
             self.nested_list_cursor = 0
-        if self.main_list_cursor > len(self.main_list):
+        if self.main_list_cursor >= len(self.main_list):
             raise StopIteration
         return self.main_list[self.main_list_cursor][self.nested_list_cursor]
 
@@ -36,11 +36,11 @@ def flat_generator(nested_list):
 
 
 if __name__ == '__main__':
-    # for item in flat_generator(nested_list):
-    #     print(item)
-    # flat_list = [item for item in flat_generator(nested_list)]
-    # print(flat_list)
-	for item in FlatIterator(nested_list):
-		print(item)
-	# 	flat_list = [[item for item in FlatIterator(nested_list)]]
-	# print(flat_list)
+    for item in flat_generator(nested_list):
+        print(item)
+    flat_list = [item for item in flat_generator(nested_list)]
+    print(flat_list)
+    for item in FlatIterator(nested_list):
+        print(item)
+    flat_list = [[item for item in FlatIterator(nested_list)]]
+    print(flat_list)
